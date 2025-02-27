@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NODE_ENV } from './common/types';
+import { Logger } from 'nestjs-pino';
 
 const useSwagger = (app: NestExpressApplication): void => {
   const options = new DocumentBuilder()
@@ -26,6 +27,9 @@ async function bootstrap() {
   if (env !== NODE_ENV.PROD) {
     useSwagger(app);
   }
+
+  const logger = app.get(Logger);
+  app.useLogger(logger);
 
   app.enableShutdownHooks();
 
