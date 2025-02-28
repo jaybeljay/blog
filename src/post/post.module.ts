@@ -13,6 +13,8 @@ import { GetPostService } from './features/get-one-post/get-post.service';
 import { UpdatePostController } from './features/update-post/update-post.controller';
 import { UpdatePostService } from './features/update-post/update-post.service';
 import { AbilityModule } from 'src/third-party/ability-factory/ability.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { cacheConfig } from 'src/config/cache.config';
 
 const repos = [PostRepository];
 const services = [
@@ -24,7 +26,11 @@ const services = [
 ];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post]), AbilityModule],
+  imports: [
+    TypeOrmModule.forFeature([Post]),
+    AbilityModule,
+    CacheModule.registerAsync(cacheConfig),
+  ],
   controllers: [
     CreatePostController,
     DeletePostController,

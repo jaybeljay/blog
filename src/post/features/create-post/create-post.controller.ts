@@ -1,17 +1,19 @@
 import { CreatePostService } from './create-post.service';
-import { Body, Post, UseGuards } from '@nestjs/common';
+import { Body, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { PostResponseDto } from 'src/post/common/dto/post.response.dto';
 import { CreatePostDto } from './dto/create-post.request.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
 import { PostsController } from 'src/post/common/constants';
 import { IAM } from 'src/common/decorators/iam.decorator';
+import { HttpCacheInterceptor } from 'src/common/interceptors/cache.interceptor';
 
 @PostsController()
 export class CreatePostController {
   constructor(private readonly createPostService: CreatePostService) {}
 
   @Post()
+  @UseInterceptors(HttpCacheInterceptor)
   @ApiOperation({ summary: 'Create post' })
   @ApiResponse({ type: () => PostResponseDto })
   @ApiBearerAuth()
