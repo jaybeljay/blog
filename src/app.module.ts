@@ -5,6 +5,10 @@ import { validationSchema } from './config/app-config/validation.schema';
 import configuration from './config/app-config/configuration';
 import { LoggerModule } from 'nestjs-pino';
 import { LoggerConfig } from './config/logger.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { dbConfig } from './config/db.config';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +18,9 @@ import { LoggerConfig } from './config/logger.config';
       validationSchema: validationSchema,
     }),
     LoggerModule.forRootAsync(LoggerConfig),
+    TypeOrmModule.forRootAsync(dbConfig),
+    UserModule,
+    AuthModule,
     HealthModule,
   ],
   controllers: [],

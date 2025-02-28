@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController } from '@nestjs/swagger';
 import {
   HealthCheck,
   HealthCheckResult,
   HealthCheckService,
 } from '@nestjs/terminus';
 
-@ApiTags('Health')
+@ApiExcludeController()
 @Controller('health')
 export class HealthController {
   constructor(private health: HealthCheckService) {}
