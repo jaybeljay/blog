@@ -10,6 +10,8 @@ import { dbConfig } from './config/db.config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { PostModule } from './post/post.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import { cacheConfig } from './config/cache.config';
 
 @Module({
   imports: [

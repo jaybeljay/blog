@@ -5,16 +5,24 @@ import {
   ApiParam,
   ApiResponse,
 } from '@nestjs/swagger';
-import { Get, Param, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import {
+  Get,
+  Param,
+  ParseUUIDPipe,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/common/guards/jwt.guard';
 import { PostsController } from 'src/post/common/constants';
 import { PostResponseDto } from 'src/post/common/dto/post.response.dto';
+import { HttpCacheInterceptor } from 'src/common/interceptors/cache.interceptor';
 
 @PostsController()
 export class GetPostController {
   constructor(private readonly getPostService: GetPostService) {}
 
   @Get(':id')
+  @UseInterceptors(HttpCacheInterceptor)
   @ApiBearerAuth()
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
   @ApiOperation({ summary: 'Get one post' })
