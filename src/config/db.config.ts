@@ -1,6 +1,7 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { NODE_ENV } from 'src/common/types';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const dbConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -16,6 +17,7 @@ export const dbConfig: TypeOrmModuleAsyncOptions = {
     logging:
       process.env.NODE_ENV === NODE_ENV.DEV ||
       process.env.NODE_ENV === NODE_ENV.STAGE,
+    namingStrategy: new SnakeNamingStrategy(),
   }),
   inject: [ConfigService],
 };

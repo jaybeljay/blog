@@ -21,7 +21,7 @@ export class GetUserController {
   @ApiResponse({ type: () => UserResponseDto })
   @UseGuards(JwtAuthGuard)
   async handle(
-    @Param('id', ParseUUIDPipe) id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
   ): Promise<UserResponseDto> {
     return this.getUserService.handle(id);
   }
