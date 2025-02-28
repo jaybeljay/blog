@@ -28,7 +28,7 @@ export class UpdateUserService {
     return plainToInstance(UserResponseDto, user, plainToInstanceConfig);
   }
 
-  private async checkUsername(username: string): Promise<void> {
+  async checkUsername(username: string): Promise<void> {
     const userExists = await this.userRepository.findOne({
       where: { username },
     });
