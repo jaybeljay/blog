@@ -1,19 +1,10 @@
 import { config } from 'dotenv';
-//import { assertDefined } from 'src/lib/utils/assert-defined.util';
+import { assertDefined } from '../lib/utils/assert-defined.util';
 import { DataSource } from 'typeorm';
 
 config();
 
 const env = process.env;
-
-export const assertDefined = <T>(val: T): T => {
-  if (val === undefined) {
-    //throw new AssertDefinedException('Value must be defined.');
-    throw new Error();
-  }
-
-  return val;
-};
 
 const dataSource = new DataSource({
   type: 'postgres',

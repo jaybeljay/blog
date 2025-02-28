@@ -1,16 +1,16 @@
+import { User } from 'src/user/entities/user.entity';
 import { TABLES } from '../../database/tables';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Post } from 'src/post/entities/post.entity';
 
-@Entity({ name: TABLES.USERS })
-export class User {
+@Entity({ name: TABLES.POSTS })
+export class Post {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
@@ -21,11 +21,14 @@ export class User {
   updatedAt: Date;
 
   @Column()
-  username: string;
+  title: string;
 
   @Column()
-  password: string;
+  description: string;
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  @Column()
+  userId: string;
+
+  @ManyToOne(() => User, (user) => user.posts, { eager: true })
+  user: User;
 }
